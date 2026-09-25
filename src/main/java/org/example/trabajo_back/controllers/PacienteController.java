@@ -35,8 +35,8 @@ public class PacienteController {
         return ResponseEntity.ok(lista);
     }
 
-    @PostMapping
-    @PreAuthorize("/registrarP/hasRole('ADMIN')")
+    @PostMapping("/registrarP")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PacienteDTO> registrar(@Valid @RequestBody PacienteDTO dto ){
         Paciente pc = modelMapper.map(dto, Paciente.class);
 
