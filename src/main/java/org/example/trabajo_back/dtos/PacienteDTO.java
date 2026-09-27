@@ -2,6 +2,7 @@ package org.example.trabajo_back.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.example.trabajo_back.entities.Paciente.Genero;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -14,8 +15,10 @@ public class PacienteDTO {
     private String nombre;
     @NotBlank(message = "El Apellido es obligatorio")
     private String apellidos;
-    @NotBlank(message = "El Genero es obligatorio")
-    private String genero;
+
+    @NotNull(message = "El Genero es obligatorio")
+    private Genero genero;
+
     @NotBlank(message = "El correo es obligatorio")
     private String correo;
     @NotBlank(message = "La Dirección es obligatoria")
@@ -59,11 +62,11 @@ public class PacienteDTO {
         this.apellidos = apellidos;
     }
 
-    public String getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(String genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
     }
 

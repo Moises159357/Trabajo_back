@@ -29,4 +29,14 @@ public class CitasServiceImplement implements ICitasService {
 
     @Override
     public void eliminar(Long id) {cR.deleteById(id);}
+
+    @Override
+    public List<Object[]> getTotalCitasPorPaciente() {
+        return cR.getTotalCitasPorPaciente();
+    }
+
+    @Override
+    public List<Object[]> getCitasYOftalmologosFrecuente() {
+        return cR.getCitasYOftalmologosFrecuente();
+    }
 }

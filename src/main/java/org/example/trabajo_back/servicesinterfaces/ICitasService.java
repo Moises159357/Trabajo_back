@@ -11,4 +11,6 @@ public interface ICitasService {
     public Optional<Citas> listarId(Long id);
     public void actualizar(Citas c);
     public void eliminar(Long id);
+    List<Object[]> getTotalCitasPorPaciente();
+    List<Object[]> getCitasYOftalmologosFrecuente();
 }
