@@ -2,6 +2,7 @@ package org.example.trabajo_back.controllers;
 
 import jakarta.validation.Valid;
 import org.example.trabajo_back.dtos.CitasDTO;
+import org.example.trabajo_back.dtos.ReporteCitasDTO;
 import org.example.trabajo_back.entities.Citas;
 import org.example.trabajo_back.entities.Paciente;
 import org.example.trabajo_back.exceptions.ResourceNotFoundException;
@@ -63,7 +64,7 @@ public class CitasController {
                 .body(responseDTO);
     }
 
-    @GetMapping("/{id{")
+    @GetMapping("/{id}")
     public ResponseEntity<CitasDTO> buscarPorId(@PathVariable Long id){
         Citas ct = cS.listarId(id)
                 .orElseThrow(() ->
@@ -104,6 +105,7 @@ public class CitasController {
         citas.setFechaCita(dto.getFechaCita());
         citas.setEstado(dto.getEstado());
         citas.setMotivoCita(dto.getMotivoCita());
+        citas.setOftalmologo(dto.getOftalmologo());
 
         // 5. Asignar el streaming existente
         citas.setPaciente(paciente.get());
@@ -129,4 +131,42 @@ public class CitasController {
         cS.eliminar(ct.getIdCitas());
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/totalCitas")
+    public ResponseEntity<List<ReporteCitasDTO>> obtenerTotalCitasPorPaciente(){
+        List<ReporteCitasDTO> lista = cS.getTotalCitasPorPaciente()
+                .stream()
+                .map(item -> {
+                    ReporteCitasDTO dto = new ReporteCitasDTO();
+
+                    dto.setIdPaciente(((Number) item[0]).longValue());
+                    dto.setNombre((String) item[1]);
+                    dto.setTotalCitas(((Number) item[2]).longValue());
+
+                    return dto;
+                })
+                .toList();
+
+        return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/oftalmologoFrecuente")
+    public ResponseEntity<List<ReporteCitasDTO>>obtenerCitasYOftalmologoFrecuente(){
+        List<ReporteCitasDTO> lista = cS.getCitasYOftalmologosFrecuente()
+                .stream()
+                .map(item -> {
+                    ReporteCitasDTO dto = new ReporteCitasDTO();
+
+                    dto.setIdPaciente(((Number) item[0]).longValue());
+                    dto.setNombre((String) item[1]);
+                    dto.setTotalCitas(((Number) item[2]).longValue());
+                    dto.setOftalmologoFrecuente((String) item[3]);
+
+                    return dto;
+                })
+                .toList();
+
+        return ResponseEntity.ok(lista);
+    }
+
 }

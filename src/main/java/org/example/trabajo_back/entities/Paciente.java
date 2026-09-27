@@ -21,8 +21,13 @@ public class Paciente {
     @Column(name = "apellidos", length = 30, nullable = false)
     private String apellidos;
 
-    @Column(name = "genero", length = 10, nullable = false)
-    private String genero;
+    public enum Genero{
+        MASCULINO,
+        FEMENINO
+    }
+    @Enumerated(EnumType.STRING)
+    @Column(name = "genero", nullable = false, length = 10)
+    private Genero genero;
 
     @Column(name = "correo", length = 100, nullable = false)
     private String correo;
@@ -39,7 +44,7 @@ public class Paciente {
     @Column(name = "fechaInscripcion", nullable = false)
     private LocalDate fechaInscripcion;
 
-    public Paciente(Long idPaciente, String dni, String nombre, String apellidos, String genero, String correo, String direccion, String telefono, Date fechaNacimiento, LocalDate fechaInscripcion) {
+    public Paciente(Long idPaciente, String dni, String nombre, String apellidos,  Genero genero, String correo, String direccion, String telefono, Date fechaNacimiento, LocalDate fechaInscripcion) {
         this.idPaciente = idPaciente;
         this.dni = dni;
         this.nombre = nombre;
@@ -87,11 +92,11 @@ public class Paciente {
         this.apellidos = apellidos;
     }
 
-    public String getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(String genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
     }
 
