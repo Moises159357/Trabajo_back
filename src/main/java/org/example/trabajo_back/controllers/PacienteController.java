@@ -26,6 +26,7 @@ public class PacienteController {
     }
 
     @GetMapping("/listarP")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OFTALMOLOGO')")
     public ResponseEntity<List<PacienteDTO>> listar(){
         List<PacienteDTO> lista = pS.list()
                 .stream()
@@ -36,7 +37,7 @@ public class PacienteController {
     }
 
     @PostMapping("/registrarP")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OFTALMOLOGO')")
     public ResponseEntity<PacienteDTO> registrar(@Valid @RequestBody PacienteDTO dto ){
         Paciente pc = modelMapper.map(dto, Paciente.class);
 
@@ -55,6 +56,7 @@ public class PacienteController {
     }
 
     @GetMapping("/buscarIDP/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('OFTALMOLOGO') or (hasRole('PACIENTE') and hasRole('OFTALMOLOGO'))")
     public ResponseEntity<PacienteDTO> buscarId(@PathVariable Long id){
         Paciente p = pS.listId(id).orElseThrow(() ->
                 new ResourceNotFoundException(
@@ -66,6 +68,7 @@ public class PacienteController {
     }
 
     @PutMapping("/actualizarPaciente")
+    @PreAuthorize("hasAnyRole('ADMIN', 'OFTALMOLOGO')")
     public ResponseEntity<PacienteDTO> actualizar(@Valid @RequestBody PacienteDTO dto){
         Paciente existe = pS.listId(dto.getIdPaciente())
                 .orElseThrow(()->
@@ -81,6 +84,7 @@ public class PacienteController {
     }
 
     @DeleteMapping("/eliminarPaciente/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> eliminar(@PathVariable Long id){
         Paciente paciente = pS.listId(id)
                 .orElseThrow(()->

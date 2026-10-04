@@ -10,6 +10,7 @@ import org.example.trabajo_back.servicesinterfaces.ICitasService;
 import org.example.trabajo_back.servicesinterfaces.IPacienteService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -30,7 +31,8 @@ public class CitasController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping
+    @GetMapping("/listarCitas")
+    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<List<CitasDTO>> listar(){
         List<CitasDTO> lista = cS.listar()
                 .stream()
@@ -39,7 +41,8 @@ public class CitasController {
         return ResponseEntity.ok(lista);
     }
 
-    @PostMapping
+    @PostMapping("/registrarCitas")
+    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<CitasDTO> registrar(@Valid @RequestBody CitasDTO dto){
         Paciente p = pS.listId(dto.getIdPaciente())
                 .orElseThrow(()->
@@ -64,7 +67,8 @@ public class CitasController {
                 .body(responseDTO);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscarCitasPorId/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('OFTALMOLOGO') or (hasRole('PACIENTE') and hasRole('OFTALMOLOGO'))")
     public ResponseEntity<CitasDTO> buscarPorId(@PathVariable Long id){
         Citas ct = cS.listarId(id)
                 .orElseThrow(() ->
@@ -77,7 +81,8 @@ public class CitasController {
         return ResponseEntity.ok(dto);
     }
 
-    @PutMapping
+    @PutMapping("/actualizarCitas")
+    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<CitasDTO> actualizar (@Valid @RequestBody CitasDTO dto) {
 
         // 1. Verificar que la película exista
@@ -120,7 +125,8 @@ public class CitasController {
         return ResponseEntity.ok(responseDTO);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/EliminarLaCita/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         Citas ct = cS.listarId(id)
                 .orElseThrow(() ->
@@ -132,7 +138,8 @@ public class CitasController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/totalCitas")
+    @GetMapping("/totalCitasPorPaciente")
+    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<List<ReporteCitasDTO>> obtenerTotalCitasPorPaciente(){
         List<ReporteCitasDTO> lista = cS.getTotalCitasPorPaciente()
                 .stream()
@@ -151,6 +158,7 @@ public class CitasController {
     }
 
     @GetMapping("/oftalmologoFrecuente")
+    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<List<ReporteCitasDTO>>obtenerCitasYOftalmologoFrecuente(){
         List<ReporteCitasDTO> lista = cS.getCitasYOftalmologosFrecuente()
                 .stream()
@@ -159,8 +167,8 @@ public class CitasController {
 
                     dto.setIdPaciente(((Number) item[0]).longValue());
                     dto.setNombre((String) item[1]);
-                    dto.setTotalCitas(((Number) item[2]).longValue());
-                    dto.setOftalmologoFrecuente((String) item[3]);
+                    dto.setOftalmologoFrecuente((String) item[2]);
+                    dto.setTotalCitas(((Number) item[3]).longValue());
 
                     return dto;
                 })
