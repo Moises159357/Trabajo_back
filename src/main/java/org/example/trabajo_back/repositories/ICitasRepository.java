@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ICitasRepository extends JpaRepository<Citas, Long> {
-    @Query(value = "SELECT p.id_paciente, p.nombre, p.apellidos, COUNT(c.id_citas) AS total_citas\n" +
+    @Query(value = "SELECT p.id_paciente, p.nombre, COUNT(c.id_citas) AS total_citas\n" +
             "FROM paciente p\n" +
             "INNER JOIN citas c ON p.id_paciente = c.id_paciente\n" +
             "GROUP BY p.id_paciente, p.nombre", nativeQuery = true)

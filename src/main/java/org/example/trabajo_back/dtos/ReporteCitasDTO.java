@@ -22,6 +22,7 @@ public class ReporteCitasDTO {
         this.nombre = nombre;
     }
 
+
     public Long getTotalCitas() {
         return totalCitas;
     }

@@ -66,7 +66,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         // Login público
-                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/login/OpticVision").permitAll()
 
                         // Swagger
                         .requestMatchers(
