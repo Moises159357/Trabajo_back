@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface ITratamientoService {
     public void insert (Tratamiento t);
     public List<Tratamiento>list();
-    public Optional<Tratamiento> listId(Long id);
+    public void update(Tratamiento t);
+    public Optional<Tratamiento>listId(Long id);
 }
