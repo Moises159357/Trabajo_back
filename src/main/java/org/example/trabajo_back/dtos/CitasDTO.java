@@ -17,7 +17,8 @@ public class CitasDTO {
     @NotNull(message = "El id del paciente es obligatorio")
     private Long idPaciente;
     @NotBlank(message = "Se necesita al oftalmologo")
-    private String oftalmologo;
+    private Long oftalmologo;
+    private Long idOftalmologo;
 
     public Long getIdCitas() {
         return idCitas;
@@ -59,7 +60,8 @@ public class CitasDTO {
         this.idPaciente = idPaciente;
     }
 
-    public String getOftalmologo() {return oftalmologo;}
-
-    public void setOftalmologo(String oftalmologo) {this.oftalmologo = oftalmologo;}
+    public Long getIdOftalmologo() {
+        Long idOftalmologo = 0L;
+        return idOftalmologo;}
+    public void setIdOftalmologo(Long idOftalmologo) {this.idOftalmologo = idOftalmologo;}
 }
