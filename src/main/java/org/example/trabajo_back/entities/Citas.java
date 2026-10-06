@@ -16,8 +16,10 @@ public class Citas {
     private String estado;
     @Column(name = "motivoCita", length =80, nullable = false)
     private String motivoCita;
-    @Column(name = "Oftalmologo", length = 40, nullable = false)
-    private String oftalmologo;
+
+    @ManyToOne
+    @JoinColumn(name = "idOftalmologo", nullable = false)
+    private Oftalmologo oftalmologo;
 
     @ManyToOne
     @JoinColumn(name = "idPaciente", nullable = false)
@@ -26,7 +28,7 @@ public class Citas {
     public Citas() {
     }
 
-    public Citas(Long idCitas, LocalDate fechaCita, String estado, String motivoCita, Paciente paciente, String oftalmologo ) {
+    public Citas(Long idCitas, LocalDate fechaCita, String estado, String motivoCita, Paciente paciente, Oftalmologo oftalmologo ) {
         this.idCitas = idCitas;
         this.fechaCita = fechaCita;
         this.estado = estado;
@@ -75,7 +77,6 @@ public class Citas {
         this.paciente = paciente;
     }
 
-    public String getOftalmologo() {return oftalmologo;}
-
-    public void setOftalmologo(String oftalmologo) {this.oftalmologo = oftalmologo;}
+    public Oftalmologo getOftalmologo() {return oftalmologo;}
+    public void setOftalmologo(Oftalmologo oftalmologo) {this.oftalmologo = oftalmologo;}
 }
