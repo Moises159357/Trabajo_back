@@ -17,7 +17,7 @@ public class Recetas {
     @Column(name = "fechaFin",nullable = false)
     private LocalDate fechaFin;
 
-    @Column(name = "fechaInicio",length = 1000, nullable = false)
+    @Column(name = "indicaciones",length = 1000, nullable = false)
     private String indicaciones;
 
     public Recetas() {
