@@ -6,6 +6,7 @@ import org.example.trabajo_back.servicesinterfaces.IIntervencionService;
 import org.springframework.aop.IntroductionInterceptor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,5 +37,15 @@ public class IntervencionServiceImplement implements IIntervencionService {
     @Override
     public Optional<Intervencion> listId(Long id) {
         return iR.findById(id);
+    }
+
+    @Override
+    public List<Object[]> obtenerIntervencionesPorFecha(LocalDate fechaInicio, LocalDate fechaFin) {
+        return iR.obtenerIntervencionesPorFechas(fechaInicio, fechaFin);
+    }
+
+    @Override
+    public List<Object[]> obtenerIntervencionesPorTipo(String tipo) {
+        return iR.obtenerIntervencionesPorTipo(tipo);
     }
 }
