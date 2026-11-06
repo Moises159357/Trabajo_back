@@ -7,10 +7,12 @@ import org.example.trabajo_back.exceptions.ResourceNotFoundException;
 import org.example.trabajo_back.servicesinterfaces.ITratamientoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -35,6 +37,7 @@ public class TratamientoController {
     }
 
     @PostMapping("/registrar")
+    @PreAuthorize("hasRole('OFTALMOLOGO')")
     public ResponseEntity<TratamientoDTO> registrar(
             @Valid @RequestBody TratamientoDTO dto) {
 
@@ -57,6 +60,7 @@ public class TratamientoController {
     }
 
     @PutMapping("/actualizar")
+    @PreAuthorize("hasRole('OFTALMOLOGO')")
     public ResponseEntity<TratamientoDTO> actualizar(
             @Valid @RequestBody TratamientoDTO dto) {
         Tratamiento existente = tS.listId(dto.getIdTratamiento())
@@ -82,4 +86,29 @@ public class TratamientoController {
         TratamientoDTO dto = modelMapper.map(tr, TratamientoDTO.class);
         return ResponseEntity.ok(dto);
     }
+
+    @GetMapping("/obtenerTratamientoPorEstado/{estado}")
+    public ResponseEntity<List<TratamientoDTO>> obtenerTratamientosPorEstado(
+            @PathVariable String estado) {
+
+        List<TratamientoDTO> lista = tS.obtenerTratamientosPorEstado(estado)
+                .stream()
+                .map(item -> {
+                    TratamientoDTO dto = new TratamientoDTO();
+
+                    dto.setIdTratamiento(((Number) item[0]).longValue());
+                    dto.setNombre((String) item[1]);
+                    dto.setIndicaciones((String) item[2]);
+                    dto.setDuracionDias(((Number) item[3]).intValue());
+                    dto.setTipo((String) item[4]);
+                    dto.setEstado((String) item[5]);
+                    dto.setFechaRegistro((LocalDate) item[6]);
+
+                    return dto;
+                })
+                .toList();
+
+        return ResponseEntity.ok(lista);
+    }
+
 }

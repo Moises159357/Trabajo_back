@@ -35,4 +35,11 @@ public class TratamientoServiceImplement implements ITratamientoService {
     public Optional<Tratamiento> listId(Long id) {
         return tR.findById(id);
     }
+
+    @Override
+    public List<Object[]> obtenerTratamientosPorEstado(String estado) {
+        return tR.getTratamientosPorEstado(estado);
+    }
+
+
 }

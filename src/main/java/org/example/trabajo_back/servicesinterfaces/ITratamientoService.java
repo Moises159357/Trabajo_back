@@ -10,4 +10,5 @@ public interface ITratamientoService {
     public List<Tratamiento>list();
     public void update(Tratamiento t);
     public Optional<Tratamiento>listId(Long id);
+    List<Object[]> obtenerTratamientosPorEstado(String estado);
 }

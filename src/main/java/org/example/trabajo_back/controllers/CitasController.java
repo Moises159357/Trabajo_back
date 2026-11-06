@@ -4,9 +4,11 @@ import jakarta.validation.Valid;
 import org.example.trabajo_back.dtos.CitasDTO;
 import org.example.trabajo_back.dtos.ReporteCitasDTO;
 import org.example.trabajo_back.entities.Citas;
+import org.example.trabajo_back.entities.Oftalmologo;
 import org.example.trabajo_back.entities.Paciente;
 import org.example.trabajo_back.exceptions.ResourceNotFoundException;
 import org.example.trabajo_back.servicesinterfaces.ICitasService;
+import org.example.trabajo_back.servicesinterfaces.IOftalmologoService;
 import org.example.trabajo_back.servicesinterfaces.IPacienteService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +25,13 @@ import java.util.Optional;
 public class CitasController {
     private final ICitasService cS;
     private final IPacienteService pS;
+    private final IOftalmologoService oS;
     private final ModelMapper modelMapper;
 
-    public CitasController(ICitasService cS, IPacienteService pS, ModelMapper modelMapper) {
+    public CitasController(ICitasService cS, IPacienteService pS, IOftalmologoService oS, ModelMapper modelMapper) {
         this.cS = cS;
         this.pS = pS;
+        this.oS = oS;
         this.modelMapper = modelMapper;
     }
 
@@ -45,26 +49,23 @@ public class CitasController {
     @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<CitasDTO> registrar(@Valid @RequestBody CitasDTO dto){
         Paciente p = pS.listId(dto.getIdPaciente())
-                .orElseThrow(()->
-                        new ResourceNotFoundException(
-                                "No existe el paciente con el id: " + dto.getIdPaciente()
-                        )
-                );
+                .orElseThrow(()-> new ResourceNotFoundException("No existe el paciente con el id: " + dto.getIdPaciente()));
+
+        Oftalmologo o = oS.listId(dto.getIdOftalmologo())
+                .orElseThrow(()-> new ResourceNotFoundException("No existe el oftalmologo con id: " + dto.getIdOftalmologo()));
+
         Citas ct = modelMapper.map(dto, Citas.class);
-        ct.setIdCitas(ct.getIdCitas());
+        ct.setPaciente(p);
+        ct.setOftalmologo(o);
         cS.insertar(ct);
 
         CitasDTO responseDTO = modelMapper.map(ct, CitasDTO.class);
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(ct.getIdCitas())
-                .toUri();
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(ct.getIdCitas()).toUri();
 
-        return ResponseEntity
-                .created(location)
-                .body(responseDTO);
+        return ResponseEntity.created(location).body(responseDTO);
     }
 
     @GetMapping("/buscarCitasPorId/{id}")
@@ -110,7 +111,10 @@ public class CitasController {
         citas.setFechaCita(dto.getFechaCita());
         citas.setEstado(dto.getEstado());
         citas.setMotivoCita(dto.getMotivoCita());
-        citas.setOftalmologo(dto.getOftalmologo());
+
+        Oftalmologo oftalmologo = oS.listId(dto.getIdOftalmologo())
+                .orElseThrow(()-> new ResourceNotFoundException("No existe el oftalmologo con id: " + dto.getIdOftalmologo()));
+        citas.setOftalmologo(oftalmologo);
 
         // 5. Asignar el streaming existente
         citas.setPaciente(paciente.get());
