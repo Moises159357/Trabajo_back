@@ -16,8 +16,13 @@ public class CitasDTO {
     private String motivoCita;
     @NotNull(message = "El id del paciente es obligatorio")
     private Long idPaciente;
+<<<<<<< Updated upstream
     @NotBlank(message = "Se necesita al oftalmologo")
     private String oftalmologo;
+=======
+    @NotNull(message = "Se necesita el id del oftalmologo")
+    private Long idOftalmologo;
+>>>>>>> Stashed changes
 
     public Long getIdCitas() {
         return idCitas;
@@ -59,7 +64,13 @@ public class CitasDTO {
         this.idPaciente = idPaciente;
     }
 
+<<<<<<< Updated upstream
     public String getOftalmologo() {return oftalmologo;}
 
     public void setOftalmologo(String oftalmologo) {this.oftalmologo = oftalmologo;}
+=======
+    public Long getIdOftalmologo() {return idOftalmologo;}
+
+    public void setIdOftalmologo(Long idOftalmologo) {this.idOftalmologo = idOftalmologo;}
+>>>>>>> Stashed changes
 }
