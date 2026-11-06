@@ -2,6 +2,7 @@ package org.example.trabajo_back.controllers;
 
 import jakarta.validation.Valid;
 import org.example.trabajo_back.dtos.TratamientoDTO;
+import org.example.trabajo_back.entities.Citas;
 import org.example.trabajo_back.entities.Tratamiento;
 import org.example.trabajo_back.exceptions.ResourceNotFoundException;
 import org.example.trabajo_back.servicesinterfaces.ITratamientoService;
@@ -85,6 +86,19 @@ public class TratamientoController {
                 ));
         TratamientoDTO dto = modelMapper.map(tr, TratamientoDTO.class);
         return ResponseEntity.ok(dto);
+    }
+
+    @DeleteMapping("/EliminarTratamiento/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        Tratamiento tra = tS.listId(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "No existe el tratamiento con el id: " + id
+                        )
+                );
+        tS.delete(tra.getIdTratamiento());
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/obtenerTratamientoPorEstado/{estado}")

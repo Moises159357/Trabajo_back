@@ -11,6 +11,7 @@ public interface IIntervencionService {
     public List<Intervencion> list();
     public void update(Intervencion i);
     public Optional<Intervencion> listId(Long id);
+    public void delete(Long id);
     List<Object[]> obtenerIntervencionesPorFecha(LocalDate fechaInicio, LocalDate fechaFin);
     List<Object[]> obtenerIntervencionesPorTipo(String tipo);
 }

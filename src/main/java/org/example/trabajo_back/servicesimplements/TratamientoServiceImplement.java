@@ -37,6 +37,11 @@ public class TratamientoServiceImplement implements ITratamientoService {
     }
 
     @Override
+    public void delete(Long id) {
+        tR.deleteById(id);
+    }
+
+    @Override
     public List<Object[]> obtenerTratamientosPorEstado(String estado) {
         return tR.getTratamientosPorEstado(estado);
     }

@@ -1,5 +1,6 @@
 package org.example.trabajo_back.servicesinterfaces;
 
+import org.example.trabajo_back.entities.Oftalmologo;
 import org.example.trabajo_back.entities.Tratamiento;
 
 import java.util.List;
@@ -10,5 +11,6 @@ public interface ITratamientoService {
     public List<Tratamiento>list();
     public void update(Tratamiento t);
     public Optional<Tratamiento>listId(Long id);
+    public void delete(Long id);
     List<Object[]> obtenerTratamientosPorEstado(String estado);
 }

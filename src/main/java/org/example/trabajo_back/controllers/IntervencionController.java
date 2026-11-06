@@ -91,6 +91,19 @@ public class IntervencionController {
         return ResponseEntity.ok(dto);
     }
 
+    @DeleteMapping("/EliminarIntervencion/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        Intervencion in = iS.listId(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "No existe la intervención con el id: " + id
+                        )
+                );
+        iS.delete(in.getIdIntervencion());
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/obtenerIntervencionPorFecha/{fechaInicio}/{fechaFin}")
     public ResponseEntity<List<IntervencionDTO>> obtenerIntervencionesPorFecha(
             @PathVariable

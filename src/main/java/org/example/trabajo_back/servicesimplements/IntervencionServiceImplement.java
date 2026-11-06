@@ -40,6 +40,11 @@ public class IntervencionServiceImplement implements IIntervencionService {
     }
 
     @Override
+    public void delete(Long id) {
+        iR.deleteById(id);
+    }
+
+    @Override
     public List<Object[]> obtenerIntervencionesPorFecha(LocalDate fechaInicio, LocalDate fechaFin) {
         return iR.obtenerIntervencionesPorFechas(fechaInicio, fechaFin);
     }
