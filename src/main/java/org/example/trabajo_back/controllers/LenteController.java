@@ -31,13 +31,13 @@ public class LenteController {
     }
 
     @GetMapping("/listarLentes")
-    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO','PACIENTE')")
+    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO','PACIENTE')")
     public ResponseEntity<List<LenteDTO>> listar() {
         return ResponseEntity.ok(lS.listar().stream().map(this::toDTO).toList());
     }
 
     @PostMapping("/registrarLente")
-    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
+    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<LenteDTO> registrar(@Valid @RequestBody LenteDTO dto) {
         Lente l = modelMapper.map(dto, Lente.class);
         l.setIdLente(null); // siempre se crea uno nuevo
@@ -52,7 +52,7 @@ public class LenteController {
     }
 
     @GetMapping("/buscarLentePorId/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO','PACIENTE')")
+    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO','PACIENTE')")
     public ResponseEntity<LenteDTO> buscarId(@PathVariable Long id) {
         Lente l = lS.listarId(id).orElseThrow(() ->
                 new ResourceNotFoundException("No existe el lente con el id: " + id));
@@ -60,7 +60,7 @@ public class LenteController {
     }
 
     @PutMapping("/actualizarLente")
-    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
+    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<LenteDTO> actualizar(@Valid @RequestBody LenteDTO dto) {
         if (dto.getIdLente() == null) {
             throw new ResourceNotFoundException("Debe indicar el idLente a actualizar");
@@ -74,7 +74,7 @@ public class LenteController {
     }
 
     @DeleteMapping("/eliminarLente/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         lS.listarId(id).orElseThrow(() ->
                 new ResourceNotFoundException("No existe el lente con el id: " + id));
@@ -85,13 +85,13 @@ public class LenteController {
     // ---------- Queries ----------
 
     @GetMapping("/buscarPorMarca/{marca}")
-    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO','PACIENTE')")
+    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO','PACIENTE')")
     public ResponseEntity<List<LenteDTO>> buscarPorMarca(@PathVariable String marca) {
         return ResponseEntity.ok(lS.buscarPorMarca(marca).stream().map(this::toDTO).toList());
     }
 
     @GetMapping("/buscarPorPrecio")
-    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO','PACIENTE')")
+    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO','PACIENTE')")
     public ResponseEntity<List<LenteDTO>> buscarPorPrecio(@RequestParam BigDecimal min,
                                                           @RequestParam BigDecimal max) {
         return ResponseEntity.ok(lS.buscarPorRangoPrecio(min, max).stream().map(this::toDTO).toList());

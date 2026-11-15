@@ -25,7 +25,7 @@ public class RecetasController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping
+    @GetMapping("/listar")
     public ResponseEntity<List<RecetasDTO>> listar() {
 
         List<RecetasDTO> lista = rS.list()
