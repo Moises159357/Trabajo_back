@@ -61,13 +61,13 @@ public class DetalleController {
     }
 
     @GetMapping("/listarDetalles")
-    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
+    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<List<DetalleDTO>> listar() {
         return ResponseEntity.ok(dS.listar().stream().map(this::toDTO).toList());
     }
 
     @PostMapping("/registrarDetalle")
-    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
+    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<DetalleDTO> registrar(@Valid @RequestBody DetalleDTO dto) {
         Detalle d = toEntity(dto);
         d.setIdDetalle(null); // siempre se crea uno nuevo
@@ -82,7 +82,7 @@ public class DetalleController {
     }
 
     @GetMapping("/buscarDetallePorId/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
+    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<DetalleDTO> buscarId(@PathVariable Long id) {
         Detalle d = dS.listarId(id).orElseThrow(() ->
                 new ResourceNotFoundException("No existe el detalle con el id: " + id));
@@ -90,7 +90,7 @@ public class DetalleController {
     }
 
     @PutMapping("/actualizarDetalle")
-    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
+    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<DetalleDTO> actualizar(@Valid @RequestBody DetalleDTO dto) {
         if (dto.getIdDetalle() == null) {
             throw new ResourceNotFoundException("Debe indicar el idDetalle a actualizar");
@@ -103,7 +103,7 @@ public class DetalleController {
     }
 
     @DeleteMapping("/eliminarDetalle/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         dS.listarId(id).orElseThrow(() ->
                 new ResourceNotFoundException("No existe el detalle con el id: " + id));
@@ -114,13 +114,13 @@ public class DetalleController {
     // ---------- Queries ----------
 
     @GetMapping("/buscarPorHistorial/{idHistorial}")
-    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
+    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<List<DetalleDTO>> buscarPorHistorial(@PathVariable Long idHistorial) {
         return ResponseEntity.ok(dS.buscarPorHistorial(idHistorial).stream().map(this::toDTO).toList());
     }
 
     @GetMapping("/lentesMasUsados")
-    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
+    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<List<ReporteLenteDTO>> lentesMasUsados() {
         return ResponseEntity.ok(dS.lentesMasUsados());
     }
