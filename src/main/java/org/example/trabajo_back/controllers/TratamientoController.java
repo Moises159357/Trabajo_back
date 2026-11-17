@@ -42,6 +42,7 @@ public class TratamientoController {
             @Valid @RequestBody TratamientoDTO dto) {
 
         Tratamiento tr = modelMapper.map(dto, Tratamiento.class);
+        tr.setIdTratamiento(null); //ID sea null antes de guardar
 
         tS.insert(tr);
 

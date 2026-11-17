@@ -57,6 +57,8 @@ public class CitasController {
         Citas ct = modelMapper.map(dto, Citas.class);
         ct.setPaciente(p);
         ct.setOftalmologo(o);
+        ct.setIdCitas(null); //ID sea null antes de guardar
+
         cS.insertar(ct);
 
         CitasDTO responseDTO = modelMapper.map(ct, CitasDTO.class);

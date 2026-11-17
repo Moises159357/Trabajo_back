@@ -40,6 +40,7 @@ public class RecetasController {
             @Valid @RequestBody RecetasDTO dto) {
 
         Recetas tr = modelMapper.map(dto, Recetas.class);
+        tr.setIdReceta(null); //ID sea null antes de guardar
 
         rS.insert(tr);
 
