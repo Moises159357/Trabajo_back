@@ -39,6 +39,7 @@ public class OftalmologoController {
     //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<OftalmologoDTO> registrar(@Valid @RequestBody OftalmologoDTO dto) {
         Oftalmologo o = modelMapper.map(dto, Oftalmologo.class);
+        o.setIdOftalmologo(null); //ID sea null antes de guardar
         oS.insert(o);
 
         OftalmologoDTO responseDTO = modelMapper.map(o, OftalmologoDTO.class);

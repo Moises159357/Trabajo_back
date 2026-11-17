@@ -46,6 +46,7 @@ public class IntervencionController {
             @Valid @RequestBody IntervencionDTO dto) {
 
         Intervencion in = modelMapper.map(dto, Intervencion.class);
+        in.setIdIntervencion(null);//ID sea null antes de guardar
 
         iS.insert(in);
 

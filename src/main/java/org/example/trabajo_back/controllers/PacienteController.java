@@ -40,6 +40,7 @@ public class PacienteController {
     //@PreAuthorize("hasAnyRole('ADMIN', 'OFTALMOLOGO')")
     public ResponseEntity<PacienteDTO> registrar(@Valid @RequestBody PacienteDTO dto ){
         Paciente pc = modelMapper.map(dto, Paciente.class);
+        pc.setIdPaciente(null); //ID sea null antes de guardar
 
         pS.insert(pc);
 
