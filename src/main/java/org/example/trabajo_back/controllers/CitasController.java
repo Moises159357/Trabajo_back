@@ -7,6 +7,7 @@ import org.example.trabajo_back.entities.Citas;
 import org.example.trabajo_back.entities.Oftalmologo;
 import org.example.trabajo_back.entities.Paciente;
 import org.example.trabajo_back.exceptions.ResourceNotFoundException;
+import org.example.trabajo_back.servicesimplements.CitasEmailService;
 import org.example.trabajo_back.servicesinterfaces.ICitasService;
 import org.example.trabajo_back.servicesinterfaces.IOftalmologoService;
 import org.example.trabajo_back.servicesinterfaces.IPacienteService;
@@ -27,12 +28,20 @@ public class CitasController {
     private final IPacienteService pS;
     private final IOftalmologoService oS;
     private final ModelMapper modelMapper;
+    private final CitasEmailService citasEmailService;
 
-    public CitasController(ICitasService cS, IPacienteService pS, IOftalmologoService oS, ModelMapper modelMapper) {
+    public CitasController(
+            ICitasService cS,
+            IPacienteService pS,
+            IOftalmologoService oS,
+            ModelMapper modelMapper,
+            CitasEmailService citasEmailService
+    ) {
         this.cS = cS;
         this.pS = pS;
         this.oS = oS;
         this.modelMapper = modelMapper;
+        this.citasEmailService = citasEmailService;
     }
 
     @GetMapping("/listarCitas")
@@ -58,6 +67,7 @@ public class CitasController {
         ct.setPaciente(p);
         ct.setOftalmologo(o);
         cS.insertar(ct);
+        notificarCita(ct, "registrada");
 
         CitasDTO responseDTO = modelMapper.map(ct, CitasDTO.class);
 
@@ -121,6 +131,7 @@ public class CitasController {
 
         // 6. Guardar
         cS.actualizar(citas);
+        notificarCita(citas, "actualizada");
 
         // 7. Convertir a DTO
         CitasDTO responseDTO =
@@ -138,8 +149,24 @@ public class CitasController {
                                 "No existe la cita con el id: " + id
                         )
                 );
+        notificarCita(ct, "cancelada");
         cS.eliminar(ct.getIdCitas());
         return ResponseEntity.noContent().build();
+    }
+
+    private void notificarCita(Citas cita, String accion) {
+        Paciente paciente = cita.getPaciente();
+        Oftalmologo oftalmologo = cita.getOftalmologo();
+        String estado = "cancelada".equals(accion) ? "Cancelada" : cita.getEstado();
+        citasEmailService.enviarNotificacionCita(
+                paciente.getCorreo(),
+                paciente.getNombre(),
+                accion,
+                cita.getFechaCita(),
+                estado,
+                cita.getMotivoCita(),
+                oftalmologo.getNombres() + " " + oftalmologo.getApellidos()
+        );
     }
 
     @GetMapping("/totalCitasPorPaciente")

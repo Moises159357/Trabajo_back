@@ -14,6 +14,8 @@ public class CitasDTO {
     private String estado;
     @NotBlank(message = "Se necesita el Motivo de la Cita")
     private String motivoCita;
+    @NotNull(message = "Se necesita el id del paciente")
+    private Long idPaciente;
     @NotNull(message = "Se necesita el id del oftalmologo")
     private Long idOftalmologo;
 
