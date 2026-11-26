@@ -37,7 +37,7 @@ public class TratamientoController {
     }
 
     @PostMapping("/registrar")
-    //@PreAuthorize("hasRole('OFTALMOLOGO')")
+    @PreAuthorize("hasRole('OFTALMOLOGO')")
     public ResponseEntity<TratamientoDTO> registrar(
             @Valid @RequestBody TratamientoDTO dto) {
 
@@ -61,7 +61,7 @@ public class TratamientoController {
     }
 
     @PutMapping("/actualizar")
-    //@PreAuthorize("hasRole('OFTALMOLOGO')")
+    @PreAuthorize("hasRole('OFTALMOLOGO')")
     public ResponseEntity<TratamientoDTO> actualizar(
             @Valid @RequestBody TratamientoDTO dto) {
         Tratamiento existente = tS.listId(dto.getIdTratamiento())

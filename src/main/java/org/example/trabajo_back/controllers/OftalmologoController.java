@@ -26,7 +26,7 @@ public class OftalmologoController {
     }
 
     @GetMapping("/listar")
-    //@PreAuthorize("hasAnyRole('ADMIN', 'PACIENTE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PACIENTE')")
     public ResponseEntity<List<OftalmologoDTO>> listar() {
         List<OftalmologoDTO> lista = oS.list()
                 .stream()
@@ -36,7 +36,7 @@ public class OftalmologoController {
     }
 
     @PostMapping("/registrar")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<OftalmologoDTO> registrar(@Valid @RequestBody OftalmologoDTO dto) {
         Oftalmologo o = modelMapper.map(dto, Oftalmologo.class);
         o.setIdOftalmologo(null); //ID sea null antes de guardar
@@ -56,7 +56,7 @@ public class OftalmologoController {
     }
 
     @GetMapping("/buscarID/{id}")
-    //@PreAuthorize("hasAnyRole('ADMIN', 'PACIENTE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PACIENTE')")
     public ResponseEntity<OftalmologoDTO> buscarId(@PathVariable Long id) {
         Oftalmologo o = oS.listId(id).orElseThrow(() ->
                 new ResourceNotFoundException("No existe el oftalmólogo con el id: " + id));
@@ -66,7 +66,7 @@ public class OftalmologoController {
     }
 
     @PutMapping("/actualizar")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<OftalmologoDTO> actualizar(@Valid @RequestBody OftalmologoDTO dto) {
         Oftalmologo existente = oS.listId(dto.getIdOftalmologo())
                 .orElseThrow(() ->
@@ -82,7 +82,7 @@ public class OftalmologoController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         Oftalmologo oftalmologo = oS.listId(id)
                 .orElseThrow(() ->

@@ -36,7 +36,7 @@ public class CitasController {
     }
 
     @GetMapping("/listarCitas")
-    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
+    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<List<CitasDTO>> listar(){
         List<CitasDTO> lista = cS.listar()
                 .stream()
@@ -46,7 +46,7 @@ public class CitasController {
     }
 
     @PostMapping("/registrarCitas")
-    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
+    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<CitasDTO> registrar(@Valid @RequestBody CitasDTO dto){
         Paciente p = pS.listId(dto.getIdPaciente())
                 .orElseThrow(()-> new ResourceNotFoundException("No existe el paciente con el id: " + dto.getIdPaciente()));
@@ -71,7 +71,7 @@ public class CitasController {
     }
 
     @GetMapping("/buscarCitasPorId/{id}")
-    //@PreAuthorize("hasRole('ADMIN') or hasRole('OFTALMOLOGO') or (hasRole('PACIENTE') and hasRole('OFTALMOLOGO'))")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('OFTALMOLOGO') or (hasRole('PACIENTE') and hasRole('OFTALMOLOGO'))")
     public ResponseEntity<CitasDTO> buscarPorId(@PathVariable Long id){
         Citas ct = cS.listarId(id)
                 .orElseThrow(() ->
@@ -85,7 +85,7 @@ public class CitasController {
     }
 
     @PutMapping("/actualizarCitas")
-    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
+    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<CitasDTO> actualizar (@Valid @RequestBody CitasDTO dto) {
 
         // 1. Verificar que la película exista
@@ -132,7 +132,7 @@ public class CitasController {
     }
 
     @DeleteMapping("/EliminarLaCita/{id}")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         Citas ct = cS.listarId(id)
                 .orElseThrow(() ->
@@ -145,7 +145,7 @@ public class CitasController {
     }
 
     @GetMapping("/totalCitasPorPaciente")
-    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
+    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<List<ReporteCitasDTO>> obtenerTotalCitasPorPaciente(){
         List<ReporteCitasDTO> lista = cS.getTotalCitasPorPaciente()
                 .stream()
@@ -164,7 +164,7 @@ public class CitasController {
     }
 
     @GetMapping("/oftalmologoFrecuente")
-    //@PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
+    @PreAuthorize("hasAnyRole('ADMIN','OFTALMOLOGO')")
     public ResponseEntity<List<ReporteCitasDTO>>obtenerCitasYOftalmologoFrecuente(){
         List<ReporteCitasDTO> lista = cS.getCitasYOftalmologosFrecuente()
                 .stream()

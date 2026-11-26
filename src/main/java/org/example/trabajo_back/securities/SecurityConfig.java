@@ -111,52 +111,55 @@ public class SecurityConfig {
                         // Login público
                         .requestMatchers("/login/OpticVision").permitAll()
                         //Citas
-                        .requestMatchers(HttpMethod.POST, "/citas/registrarCitas").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/citas/listarCitas").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/citas/actualizarCitas").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/citas/EliminarLaCita/**").permitAll()
-                        //
-                        .requestMatchers(HttpMethod.GET, "/citas/buscarCitasPorId/**").permitAll()
-                        //Detalles
-                        .requestMatchers(HttpMethod.POST, "/detalles/registrarDetalle").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/detalles/listarDetalles").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/detalles/buscarDetallePorId/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/detalles/actualizarDetalle").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/detalles/eliminarDetalle/**").permitAll()
-                        //Intervencion
-                        .requestMatchers(HttpMethod.POST, "/api/intervenciones/registrar").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/intervenciones").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/intervenciones/buscarPorID/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/intervenciones/actualizar").permitAll()
-                        //Lentes
-                        .requestMatchers(HttpMethod.POST, "/lentes/registrarLente").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/lentes/listarLentes").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/lentes/buscarLentePorId/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/lentes/actualizarLente").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/lentes/eliminarLente/**").permitAll()
-                        //Oftalmologo
-                        .requestMatchers(HttpMethod.POST, "/api/oftalmologos/registrar").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/oftalmologos/listar").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/oftalmologos/buscarID/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/oftalmologos/actualizar").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/api/oftalmologos/eliminar/**").permitAll()
-                        //Paciente
-                        .requestMatchers(HttpMethod.POST, "/api/paciente/registrarP").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/paciente/listarP").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/paciente/buscarIDP/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/paciente/actualizarPaciente").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/api/paciente/eliminarPaciente/**").permitAll()
-                        //Recetas
-                        .requestMatchers(HttpMethod.POST, "/api/recetas/registrar").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/recetas/listar").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/recetas/buscarPorID/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/recetas/actualizar").permitAll()
-                        //Tratamiento
-                        // Tratamientos
-                        .requestMatchers(HttpMethod.GET, "/api/tratamientos").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/tratamientos/registrar").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/tratamientos/actualizar").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/tratamientos/buscarPorID/**").permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/citas/registrarCitas").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/citas/listarCitas").permitAll()
+//                        .requestMatchers(HttpMethod.PUT, "/citas/actualizarCitas").permitAll()
+//                        .requestMatchers(HttpMethod.DELETE, "/citas/EliminarLaCita/**").permitAll()
+//                        // Reportes de Citas
+//                        .requestMatchers(HttpMethod.GET, "/citas/totalCitasPorPaciente").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/citas/oftalmologoFrecuente").permitAll()
+//                        //
+//                        .requestMatchers(HttpMethod.GET, "/citas/buscarCitasPorId/**").permitAll()
+//                        //Detalles
+//                        .requestMatchers(HttpMethod.POST, "/detalles/registrarDetalle").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/detalles/listarDetalles").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/detalles/buscarDetallePorId/**").permitAll()
+//                        .requestMatchers(HttpMethod.PUT, "/detalles/actualizarDetalle").permitAll()
+//                        .requestMatchers(HttpMethod.DELETE, "/detalles/eliminarDetalle/**").permitAll()
+//                        //Intervencion
+//                        .requestMatchers(HttpMethod.POST, "/api/intervenciones/registrar").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/intervenciones").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/intervenciones/buscarPorID/**").permitAll()
+//                        .requestMatchers(HttpMethod.PUT, "/api/intervenciones/actualizar").permitAll()
+//                        //Lentes
+//                        .requestMatchers(HttpMethod.POST, "/lentes/registrarLente").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/lentes/listarLentes").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/lentes/buscarLentePorId/**").permitAll()
+//                        .requestMatchers(HttpMethod.PUT, "/lentes/actualizarLente").permitAll()
+//                        .requestMatchers(HttpMethod.DELETE, "/lentes/eliminarLente/**").permitAll()
+//                        //Oftalmologo
+//                        .requestMatchers(HttpMethod.POST, "/api/oftalmologos/registrar").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/oftalmologos/listar").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/oftalmologos/buscarID/**").permitAll()
+//                        .requestMatchers(HttpMethod.PUT, "/api/oftalmologos/actualizar").permitAll()
+//                        .requestMatchers(HttpMethod.DELETE, "/api/oftalmologos/eliminar/**").permitAll()
+//                        //Paciente
+//                        .requestMatchers(HttpMethod.POST, "/api/paciente/registrarP").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/paciente/listarP").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/paciente/buscarIDP/**").permitAll()
+//                        .requestMatchers(HttpMethod.PUT, "/api/paciente/actualizarPaciente").permitAll()
+//                        .requestMatchers(HttpMethod.DELETE, "/api/paciente/eliminarPaciente/**").permitAll()
+//                        //Recetas
+//                        .requestMatchers(HttpMethod.POST, "/api/recetas/registrar").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/recetas/listar").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/recetas/buscarPorID/**").permitAll()
+//                        .requestMatchers(HttpMethod.PUT, "/api/recetas/actualizar").permitAll()
+//                        //Tratamiento
+//                        // Tratamientos
+//                        .requestMatchers(HttpMethod.GET, "/api/tratamientos").permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/api/tratamientos/registrar").permitAll()
+//                        .requestMatchers(HttpMethod.PUT, "/api/tratamientos/actualizar").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/api/tratamientos/buscarPorID/**").permitAll()
 
 
                         // Swagger
