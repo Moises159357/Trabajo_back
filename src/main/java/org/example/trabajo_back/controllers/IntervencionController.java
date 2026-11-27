@@ -41,11 +41,12 @@ public class IntervencionController {
     }
 
     @PostMapping("/registrar")
-    //@PreAuthorize("hasRole('OFTALMOLOGO')")
+    @PreAuthorize("hasRole('OFTALMOLOGO')")
     public ResponseEntity<IntervencionDTO> registrar(
             @Valid @RequestBody IntervencionDTO dto) {
 
         Intervencion in = modelMapper.map(dto, Intervencion.class);
+        in.setIdIntervencion(null);//ID sea null antes de guardar
 
         iS.insert(in);
 
@@ -64,7 +65,7 @@ public class IntervencionController {
     }
 
     @PutMapping("/actualizar")
-    //@PreAuthorize("hasRole('OFTALMOLOGO')")
+    @PreAuthorize("hasRole('OFTALMOLOGO')")
     public ResponseEntity<IntervencionDTO> actualizar(
             @Valid @RequestBody IntervencionDTO dto) {
         Intervencion existente = iS.listId(dto.getIdIntervencion())
